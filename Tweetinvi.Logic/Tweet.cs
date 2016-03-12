@@ -99,7 +99,7 @@ namespace Tweetinvi.Logic
             get { return _tweetDTO.CurrentUserRetweetIdentifier; }
         }
 
-        public DateTime CreatedAt
+        public DateTimeOffset CreatedAt
         {
             get { return _tweetDTO.CreatedAt; }
         }

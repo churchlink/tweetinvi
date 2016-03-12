@@ -14,12 +14,12 @@ namespace Tweetinvi.Core.Interfaces
     /// </summary>
     public interface ITweet : ITweetIdentifier, ITweetAsync, IEquatable<ITweet>
     {
-        #region Twitter API Properties
+		#region Twitter API Properties
 
-        /// <summary>
-        /// Creation date of the Tweet
-        /// </summary>
-        DateTime CreatedAt { get; }
+		/// <summary>
+		/// Creation date of the Tweet
+		/// </summary>
+		DateTimeOffset CreatedAt { get; }
 
         /// <summary>
         /// Formatted text of the tweet

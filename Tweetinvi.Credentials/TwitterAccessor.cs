@@ -23,7 +23,15 @@ namespace Tweetinvi.Credentials
         private readonly ICursorQueryHelper _cursorQueryHelper;
         private readonly ITwitterRequestHandler _twitterRequestHandler;
 
-        public TwitterAccessor(
+		/// <summary>
+		/// A function that, when set, allows one to receive the raw Http queries and 
+		/// their raw results. First string parameter is the query url (or part thereof), 
+		/// the last is the response (e.g. json). Useful for diagnostic or other purposes, to see 
+		/// the actual query urls and the actual raw responses from Twitter.
+		/// </summary>
+		public static Action<string, HttpMethod, string> QueriesLog;
+
+		public TwitterAccessor(
             IJObjectStaticWrapper jObjectStaticWrapper,
             IJsonObjectConverter jsonObjectConverter,
             IExceptionHandler exceptionHandler,
@@ -378,7 +386,10 @@ namespace Tweetinvi.Credentials
 
             try
             {
-                return _twitterRequestHandler.ExecuteQuery(query, method);
+				string result = _twitterRequestHandler.ExecuteQuery(query, method);
+				if(QueriesLog != null)
+					QueriesLog(query, method, result);
+				return result;
             }
             catch (TwitterException ex)
             {
@@ -397,7 +408,9 @@ namespace Tweetinvi.Credentials
             try
             {
                 result = _twitterRequestHandler.ExecuteMultipartQuery(query, contentId, HttpMethod.POST, binaries);
-                return true;
+				if(QueriesLog != null)
+					QueriesLog(query, HttpMethod.POST, result);
+				return true;
             }
             catch (TwitterException ex)
             {

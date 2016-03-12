@@ -73,10 +73,10 @@ namespace Tweetinvi.Logic.DTO
         public ITweetEntities Entities { get; set; }
 
         [JsonProperty("created_at")]
-        [JsonConverter(typeof(JsonTwitterDateTimeConverter))]
-        public DateTime CreatedAt { get; set; }
+        [JsonConverter(typeof(JsonTwitterDateTimeOffsetConverter))] //JsonTwitterDateTimeConverter))]
+        public DateTimeOffset CreatedAt { get; set; }
 
-        [JsonProperty("truncated")]
+		[JsonProperty("truncated")]
         public bool Truncated { get; set; }
 
         [JsonProperty("in_reply_to_status_id")]
